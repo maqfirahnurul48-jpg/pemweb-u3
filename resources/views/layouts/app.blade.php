@@ -1,58 +1,60 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>@yield('title','Portal Berita') - Portal Berita</title>
-<style>
-*{box-sizing:border-box}
-:root{--navy:#0F2A44;--navy2:#1A3A5C;--gold:#F2A900;--bg:#F6F7F9;--card:#fff;--text:#1A2233;--muted:#6B7280;--border:#E5E7EB;--green:#E6F4EA;--red:#FDECEA}
-body{font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:var(--bg);color:var(--text);margin:0;line-height:1.6}
-a{color:var(--navy);text-decoration:none}
-a:hover{text-decoration:underline}
-.container{max-width:1080px;margin:0 auto;padding:0 20px 48px}
-.topbar{background:var(--navy);color:#fff;position:sticky;top:0;z-index:10}
-.topbar-inner{max-width:1080px;margin:0 auto;padding:0 20px;height:64px;display:flex;align-items:center;gap:24px}
-.logo{font-weight:800;font-size:19px;color:#fff;letter-spacing:-.3px}
-.logo span{color:var(--gold)}
-.nav{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
-.nav a{color:#CBD5E1;padding:8px 12px;border-radius:999px;font-size:14px;font-weight:600}
-.nav a:hover{color:#fff;text-decoration:none;background:rgba(255,255,255,.1)}
-.nav a.active{color:#fff;background:var(--navy2)}
-.nav .right{margin-left:auto;display:flex;gap:10px;align-items:center}
-.btn{display:inline-flex;align-items:center;gap:6px;border:0;cursor:pointer;padding:10px 16px;border-radius:10px;font-weight:700;font-size:14px}
-.btn-primary{background:var(--gold);color:#1A2233}
-.btn-dark{background:var(--navy);color:#fff}
-.btn-ghost{background:#fff;border:1px solid var(--border);color:var(--text)}
-.btn-danger{background:#DC2626;color:#fff}
-.btn-sm{padding:7px 12px;font-size:13px}
-.card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:24px;box-shadow:0 2px 12px rgba(15,42,68,.06)}
-.row{display:grid;gap:18px;grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
-.muted{color:var(--muted)}
-.flash{background:var(--green);border:1px solid #B7DFC3;padding:12px 14px;border-radius:10px;margin:14px 0;font-weight:600}
-.error{background:var(--red);border:1px solid #F5C2BD;padding:12px 14px;border-radius:10px;margin:14px 0}
-label{display:block;margin-top:16px;font-weight:700;font-size:14px}
-input[type=text],input[type=url],input[type=email],input[type=password],textarea{width:100%;padding:12px 14px;border:1px solid var(--border);border-radius:10px;margin-top:6px;font:inherit;background:#FBFCFD}
-input:focus,textarea:focus{outline:2px solid var(--navy);border-color:var(--navy)}
-.pagination{display:flex;gap:6px;list-style:none;padding:0;flex-wrap:wrap}
-.pagination a,.pagination span{display:block;padding:8px 12px;border:1px solid var(--border);border-radius:8px;background:#fff}
-.pagination li.active span{background:var(--navy);color:#fff;border-color:var(--navy)}
-.inline{display:inline}
-.hero{background:var(--navy);color:#fff;border-radius:20px;padding:32px;margin:24px 0}
-.hero h2{margin:0 0 8px;font-size:32px;line-height:1.2}
-.hero p{color:#CBD5E1;margin:0 0 18px;max-width:640px}
-.article-card{overflow:hidden;padding:0}
-.article-card img{width:100%;height:180px;object-fit:cover;display:block}
-.article-card .body{padding:18px}
-.badge{display:inline-block;background:#FEF3C7;color:#92400E;padding:4px 10px;border-radius:999px;font-size:12px;font-weight:700}
-.stat-num{font-size:36px;font-weight:800;margin:6px 0}
-.footer{max-width:1080px;margin:0 auto;padding:20px;text-align:center;color:var(--muted);font-size:13px}
-@media(max-width:640px){.topbar-inner{height:auto;padding:12px 16px;flex-wrap:wrap}.hero h2{font-size:26px}}
-</style>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <title>{{ config('app.name', 'Portal Berita') }}</title>
+
+    <link rel="preconnect" href="https://fonts.bunny.net">
+    <link href="https://fonts.bunny.net/css?family=figtree:400,500,600,700,800&display=swap" rel="stylesheet" />
+
+    <style>
+        body { background: #EFF6FF !important; font-family: 'Figtree', sans-serif !important; margin: 0; }
+        .my-nav { background: #1D4ED8 !important; padding: 16px 24px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 4px 20px rgba(29,78,216,0.3); }
+        .my-nav a { color: white !important; text-decoration: none; font-weight: 700; margin-left: 20px; }
+        .my-nav .logo { font-size: 22px; font-weight: 800; }
+        header { background: white !important; border-bottom: 3px solid #BFDBFE !important; padding: 20px; }
+        header h2 { color: #1E3A8A !important; font-weight: 800 !important; margin: 0; }
+        h1, h2, h3 { color: #1E3A8A !important; }
+        a { color: #2563EB !important; }
+        button { background: #2563EB !important; color: white !important; border-radius: 999px !important; border: none !important; padding: 10px 20px; cursor: pointer; }
+        button:hover { background: #1D4ED8 !important; }
+        .content-box { background: white !important; border: 2px solid #BFDBFE !important; border-radius: 20px !important; padding: 24px; margin: 24px auto; max-width: 1100px; }
+        input, textarea, select { border-radius: 12px !important; border: 2px solid #BFDBFE !important; padding: 10px; width: 100%; }
+        footer { background: #1D4ED8 !important; color: white !important; text-align: center; padding: 20px; margin-top: 40px; }
+        footer p { color: white !important; margin: 4px; }
+    </style>
 </head>
 <body>
-@include('partials.nav')
-<main class="container">@yield('content')</main>
-<div class="footer">Portal Berita • Praktikum Pemrograman Web • UIN Ar-Raniry</div>
+    <div class="min-h-screen">
+        <nav class="my-nav">
+            <a href="/" class="logo">Portal Berita</a>
+            <div>
+                <a href="/">Beranda</a>
+                <a href="/dashboard">Dashboard</a>
+                <a href="/login">Login</a>
+            </div>
+        </nav>
+
+        @isset($header)
+            <header>
+                {{ $header }}
+            </header>
+        @endisset
+
+        <main>
+            <div class="content-box">
+                {{ $slot ?? '' }}
+                @yield('content')
+            </div>
+        </main>
+
+        <footer>
+            <p style="font-weight:700; font-size:18px;">Portal Berita</p>
+            <p style="font-size:14px;">Berita Terbaru, Cepat & Terpercaya - Biru Putih</p>
+            <p style="font-size:12px; opacity:0.8;">© 2026 Portal Berita. All rights reserved.</p>
+        </footer>
+    </div>
 </body>
 </html>
